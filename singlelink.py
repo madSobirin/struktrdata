@@ -57,7 +57,6 @@ class SingleLinkedList:
             current = current.next
         print("None")
 
-# Contoh penggunaan
 sll = SingleLinkedList()
 sll.insert_at_beginning(10)
 sll.insert_at_beginning(20)
