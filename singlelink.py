@@ -63,7 +63,9 @@ sll.insert_at_beginning(20)
 sll.insert_after(20, 15)
 sll.insert_after(10, 5)
 sll.display()  
+# Output: 20 -> 15 -> 10 -> 5 -> None
 
 sll.delete(15)
 sll.delete(5)
 sll.display() 
+# Output: 20 -> 10 -> None
