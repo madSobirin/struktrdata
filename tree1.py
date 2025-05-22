@@ -4,7 +4,6 @@ class Node:
         self.left = None
         self.right = None
 
-# Membuat tree sesuai gambar
 #         A
 #        / \
 #       B   C

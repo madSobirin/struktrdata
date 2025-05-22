@@ -1,73 +1,47 @@
 class Node:
-    def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
+    def __init__(self, name):
+        self.name = name
+        self.children = []
 
-# Membuat tree sesuai gambar
-#         A
-#        / \
-#       B   C
-#      / \    \
-#     D   E    F
+    def add_child(self, child_node):
+        self.children.append(child_node)
 
-root = Node('A')
-root.left = Node('B')
-root.right = Node('C')
-root.left.left = Node('D')
-root.left.right = Node('E')
-root.right.right = Node('F')
+    def print_tree(self, level=0):
+        print(" " * (level * 4) + "|-- " + self.name)
+        for child in self.children:
+            child.print_tree(level + 1)
 
-# Fungsi traversal
-def inorder(node):
-    if node:
-        inorder(node.left)
-        print(node.data, end=' ')
-        inorder(node.right)
+    def find_position(self, name, path=""):
+        current_path = f"{path}/{self.name}"
+        if self.name == name:
+            return current_path
+        for child in self.children:
+            result = child.find_position(name, current_path)
+            if result:
+                return result
+        return None
 
-def preorder(node):
-    if node:
-        print(node.data, end=' ')
-        preorder(node.left)
-        preorder(node.right)
 
-def postorder(node):
-    if node:
-        postorder(node.left)
-        postorder(node.right)
-        print(node.data, end=' ')
+# Contoh penggunaan
+if __name__ == "__main__":
+    direktur = Node("Direktur")
 
-# Fungsi untuk menampilkan tree secara visual
-def print_tree(node, level=0, prefix="Root: "):
-    if node is not None:
-        print(" " * (level * 4) + prefix + node.data)
-        if node.left or node.right:
-            if node.left:
-                print_tree(node.left, level + 1, "L--- ")
-            else:
-                print(" " * ((level + 1) * 4) + "L--- None")
-            if node.right:
-                print_tree(node.right, level + 1, "R--- ")
-            else:
-                print(" " * ((level + 1) * 4) + "R--- None")
+    manajer1 = Node("Manajer 1")
+    manajer1.add_child(Node("Supervisor A"))
+    manajer1.add_child(Node("Supervisor B"))
 
-# Tampilkan struktur tree
-print("Struktur Tree:")
-print_tree(root)
-print()
+    manajer2 = Node("Manajer 2")
+    manajer2.add_child(Node("Supervisor C"))
 
-# Tampilkan traversal
-print("Tampilan Inorder")
-print("================")
-inorder(root)
-print("\n")
+    direktur.add_child(manajer1)
+    direktur.add_child(manajer2)
 
-print("Tampilan Preorder")
-print("=================")
-preorder(root)
-print("\n")
+    print("Struktur Organisasi:")
+    direktur.print_tree()
 
-print("Tampilan Postorder")
-print("==================")
-postorder(root)
-print()
+    posisi = "Supervisor C"
+    hasil = direktur.find_position(posisi)
+    if hasil:
+        print(f"\nPosisi '{posisi}' ditemukan di jalur: {hasil}")
+    else:
+        print(f"\nPosisi '{posisi}' tidak ditemukan.")
